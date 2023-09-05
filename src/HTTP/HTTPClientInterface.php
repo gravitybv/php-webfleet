@@ -17,25 +17,29 @@ use TomTom\Telematics\WebfleetResponse;
 /**
  *
  */
-interface HTTPClientInterface{
+interface HTTPClientInterface
+{
+    const API_BASE = "https://csv.webfleet.com/extern/";
 
-	const API_BASE = 'https://csv.webfleet.com/extern/';
+    /**
+     * @param array  $params
+     * @param string $method
+     * @param mixed  $body
+     * @param array  $headers
+     *
+     * @return \TomTom\Telematics\WebfleetResponse
+     */
+    public function request(
+        array $params = [],
+        string $method = "GET",
+        $body = null,
+        array $headers = [],
+    ): WebfleetResponse;
 
-	/**
-	 * @param array  $params
-	 * @param string $method
-	 * @param mixed  $body
-	 * @param array  $headers
-	 *
-	 * @return \TomTom\Telematics\WebfleetResponse
-	 */
-	public function request(array $params = [], string $method = 'GET', $body = null, array $headers = []):WebfleetResponse;
-
-	/**
-	 * @param array $headers
-	 *
-	 * @return array
-	 */
-	public function normalizeHeaders(array $headers):array;
-
+    /**
+     * @param array $headers
+     *
+     * @return array
+     */
+    public function normalizeHeaders(array $headers): array;
 }

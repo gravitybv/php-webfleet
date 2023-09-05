@@ -16,143 +16,206 @@ use TomTom\Telematics\HTTP\HTTPClientInterface;
 /**
  * Class WebfleetEndpoint
  */
-class WebfleetEndpoint extends WebfleetConnect{
+class WebfleetEndpoint extends WebfleetConnect
+{
+    const RANGE_PATTERN = [
+        "d0",
+        "d-1",
+        "d-2",
+        "d-3",
+        "d-4",
+        "d-5",
+        "d-6",
+        "w0",
+        "w-1",
+        "w-2",
+        "w-3",
+        "wf0",
+        "wf-1",
+        "wf-2",
+        "wf-3",
+        "m0",
+        "m-1",
+        "m-2",
+        "m-3",
+    ];
 
-	const  RANGE_PATTERN = [
-		'd0', 'd-1', 'd-2', 'd-3', 'd-4', 'd-5', 'd-6',
-		'w0', 'w-1', 'w-2', 'w-3',
-		'wf0', 'wf-1', 'wf-2', 'wf-3',
-		'm0', 'm-1', 'm-2', 'm-3',
-	];
+    /**
+     * __anonymous constructor.
+     *
+     * @param \TomTom\Telematics\HTTP\HTTPClientInterface $http
+     * @param \TomTom\Telematics\WebfleetOptions          $options
+     * @param string                                      $interface
+     */
+    public function __construct(
+        HTTPClientInterface $http,
+        WebfleetOptions $options,
+        string $interface,
+    ) {
+        parent::__construct($http, $options);
 
-	/**
-	 * __anonymous constructor.
-	 *
-	 * @param \TomTom\Telematics\HTTP\HTTPClientInterface $http
-	 * @param \TomTom\Telematics\WebfleetOptions          $options
-	 * @param string                                      $interface
-	 */
-	public function __construct(HTTPClientInterface $http, WebfleetOptions $options, string $interface){
-		parent::__construct($http, $options);
+        $this->endpoint = $interface;
+    }
 
-		$this->endpoint = $interface;
-	}
+    /**
+     * @param string $method
+     * @param array $arguments
+     *
+     * @todo rate limits
+     *
+     * @return \TomTom\Telematics\WebfleetResponse
+     * @throws \TomTom\Telematics\WebfleetException
+     */
+    public function __call(string $method, array $arguments): WebfleetResponse
+    {
+        if (
+            isset($this->method_map[$this->endpoint]) &&
+            array_key_exists($method, $this->method_map[$this->endpoint])
+        ) {
+            $_method = $this->method_map[$this->endpoint][$method];
 
-	/**
-	 * @param string $method
-	 * @param array $arguments
-	 *
-	 * @todo rate limits
-	 *
-	 * @return \TomTom\Telematics\WebfleetResponse
-	 * @throws \TomTom\Telematics\WebfleetException
-	 */
-	public function __call(string $method, array $arguments):WebfleetResponse{
+            // ...limiter
 
-		if(isset($this->method_map[$this->endpoint]) && array_key_exists($method, $this->method_map[$this->endpoint])){
-			$_method = $this->method_map[$this->endpoint][$method];
+            // method parameters
+            $params =
+                isset($arguments[0]) && !empty($arguments[0])
+                    ? $arguments[0]
+                    : [];
 
-			// ...limiter
+            if (
+                isset($_method["required"]) &&
+                !empty($_method["required"]) &&
+                empty(
+                    array_intersect($_method["required"], array_keys($params))
+                )
+            ) {
+                throw new WebfleetException("required parameter missing");
+            }
 
-			// method parameters
-			$params = isset($arguments[0]) && !empty($arguments[0]) ? $arguments[0] : [];
+            // date range
+            if (isset($arguments[1]) && !empty($arguments[1])) {
+                $params = array_merge(
+                    $params,
+                    $this->dateRangeFilter($arguments[1]),
+                );
+            }
 
-			if(isset($_method['required']) && !empty($_method['required']) && empty(array_intersect($_method['required'], array_keys($params)))){
-				throw new WebfleetException('required parameter missing');
-			}
+            $params = array_merge($this->options->__toArray(), $params, [
+                "action" => $method,
+            ]);
 
-			// date range
-			if(isset($arguments[1]) && !empty($arguments[1])){
-				$params = array_merge($params, $this->dateRangeFilter($arguments[1]));
-			}
+            foreach ($params as $param => $value) {
+                if (is_null($value)) {
+                    unset($params[$param]);
+                } elseif (is_bool($value)) {
+                    $params[$param] = $value ? "true" : "false";
+                }
+            }
 
-			$params = array_merge($this->options->__toArray(), $params, ['action' => $method]);
+            return $this->http->request($params);
+        }
 
-			foreach($params as $param => $value){
+        throw new WebfleetException(
+            'method does not exist in class "' .
+                $this->endpoint .
+                '": ' .
+                $method,
+        );
+    }
 
-				if(is_null($value)){
-					unset($params[$param]);
-				}
-				elseif(is_bool($value)){
-					$params[$param] = $value ? 'true' : 'false';
-				}
+    /**
+     * @param array $date_range_params
+     *
+     * @todo doc: Table 3-3: Date range filter parameters -> ISO8601 (only mentioned in general params)
+     *
+     * @return array
+     * @throws \TomTom\Telematics\WebfleetException
+     */
+    protected function dateRangeFilter(array $date_range_params): array
+    {
+        // range pattern
+        if (
+            isset($date_range_params["range_pattern"]) &&
+            in_array($date_range_params["range_pattern"], self::RANGE_PATTERN)
+        ) {
+            return ["range_pattern" => $date_range_params["range_pattern"]];
+        }
 
-			}
+        // range_from/to, either as string or unix timestamp
+        elseif (
+            isset(
+                $date_range_params["rangefrom_string"],
+                $date_range_params["rangeto_string"],
+            )
+        ) {
+            $params = ["range_pattern" => "ud"];
 
-			return $this->http->request($params);
-		}
+            foreach (["rangefrom_string", "rangeto_string"] as $k) {
+                if (empty($date_range_params[$k])) {
+                    throw new WebfleetException(
+                        "invalid date range value: " . $k,
+                    );
+                }
 
-		throw new WebfleetException('method does not exist in class "'.$this->endpoint.'": '.$method);
-	}
+                $params[$k] = is_int($date_range_params[$k])
+                    ? date("c", $date_range_params[$k])
+                    : $date_range_params[$k];
+            }
 
-	/**
-	 * @param array $date_range_params
-	 *
-	 * @todo doc: Table 3-3: Date range filter parameters -> ISO8601 (only mentioned in general params)
-	 *
-	 * @return array
-	 * @throws \TomTom\Telematics\WebfleetException
-	 */
-	protected function dateRangeFilter(array $date_range_params):array {
+            return $params;
+        }
 
-		// range pattern
-		if(isset($date_range_params['range_pattern']) && in_array($date_range_params['range_pattern'], self::RANGE_PATTERN)){
-			return ['range_pattern' => $date_range_params['range_pattern']];
-		}
+        // year/month/day
+        elseif (isset($date_range_params["year"])) {
+            $year = intval($date_range_params["year"]);
 
-		// range_from/to, either as string or unix timestamp
-		elseif(isset($date_range_params['rangefrom_string'], $date_range_params['rangeto_string'])){
-			$params = ['range_pattern' => 'ud'];
+            if (!in_array($year, range(2004, (int) date("Y")), true)) {
+                throw new WebfleetException(
+                    "invalid year value: " . $date_range_params["year"],
+                );
+            }
 
-			foreach(['rangefrom_string', 'rangeto_string'] as $k){
+            $params = ["year" => $year];
 
-				if(empty($date_range_params[$k])){
-					throw new WebfleetException('invalid date range value: '.$k);
-				}
+            if (isset($date_range_params["month"])) {
+                $month = intval($date_range_params["month"]);
 
-				$params[$k] = is_int($date_range_params[$k])
-					? date('c', $date_range_params[$k])
-					: $date_range_params[$k];
-			}
+                if (!in_array($month, range(1, 12), true)) {
+                    throw new WebfleetException(
+                        "invalid month value: " . $date_range_params["month"],
+                    );
+                }
 
-			return $params;
-		}
+                $params["month"] = $month;
 
-		// year/month/day
-		elseif(isset($date_range_params['year'])){
-			$year = intval($date_range_params['year']);
+                if (isset($date_range_params["day"])) {
+                    $day = intval($date_range_params["day"]);
 
-			if(!in_array($year, range(2004, (int)date('Y')), true)){
-				throw new WebfleetException('invalid year value: '.$date_range_params['year']);
-			}
+                    if (
+                        !in_array(
+                            $day,
+                            range(
+                                1,
+                                (int) date(
+                                    "t",
+                                    mktime(0, 0, 0, $month, 1, $year),
+                                ),
+                            ),
+                            true,
+                        )
+                    ) {
+                        throw new WebfleetException(
+                            "invalid day value: " . $date_range_params["day"],
+                        );
+                    }
 
-			$params = ['year' => $year];
+                    $params["day"] = $day;
+                }
+            }
 
-			if(isset($date_range_params['month'])){
-				$month = intval($date_range_params['month']);
+            return $params;
+        }
 
-				if(!in_array($month, range(1, 12), true)){
-					throw new WebfleetException('invalid month value: '.$date_range_params['month']);
-				}
-
-				$params['month'] =  $month;
-
-				if(isset($date_range_params['day'])){
-					$day = intval($date_range_params['day']);
-
-					if(!in_array($day, range(1, (int)date('t', mktime(0,0,0, $month, 1, $year))), true)){
-						throw new WebfleetException('invalid day value: '.$date_range_params['day']);
-					}
-
-					$params['day'] =  $day;
-				}
-
-			}
-
-			return $params;
-		}
-
-		throw new WebfleetException('invalid date range parameters');
-	}
-
+        throw new WebfleetException("invalid date range parameters");
+    }
 }

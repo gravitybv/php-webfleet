@@ -17,31 +17,29 @@ namespace TomTom\Telematics;
  * @property string         $body
  * @property bool|\stdClass $json
  */
-class WebfleetResponse extends Container{
+class WebfleetResponse extends Container
+{
+    /**
+     * @var array
+     */
+    protected $headers = [];
 
-	/**
-	 * @var array
-	 */
-	protected $headers = [];
+    protected $request_time;
+    protected $response_time;
 
-	protected $request_time;
-	protected $response_time;
+    /**
+     * @var string
+     */
+    protected $body;
 
-	/**
-	 * @var string
-	 */
-	protected $body;
+    public function __get(string $property)
+    {
+        if ($property === "json") {
+            return json_decode($this->body);
+        } elseif (property_exists($this, $property)) {
+            return $this->{$property};
+        }
 
-	public function __get(string $property){
-
-		if($property === 'json'){
-			return json_decode($this->body);
-		}
-		else if(property_exists($this, $property)){
-			return $this->{$property};
-		}
-
-		return false;
-	}
-
+        return false;
+    }
 }

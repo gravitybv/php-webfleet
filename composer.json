@@ -1,30 +1,40 @@
 {
-	"name": "chillerlan/php-webfleet",
-	"description": "A wrapper for the TomTom Business Webfleet.connect API. PHP 7+",
-	"homepage": "https://github.com/codemasher/php-webfleet",
-	"license": "MIT",
-	"type": "library",
-	"keywords": [
-		"webfleet", "tomtom", "telematics" ,"api", "wrapper"
-	],
-	"authors": [
-		{
-			"name": "Smiley",
-			"email": "smiley@chillerlan.net"
-		}
-	],
-	"require": {
-		"php": ">=7.0.3",
-		"chillerlan/php-curl": "^1.0",
-		"vlucas/phpdotenv": "2.*"
-	},
-	"require-dev": {
-		"phpunit/phpunit": "6.0.*"
-	},
-	"autoload": {
-		"psr-4": {
-			"TomTom\\Telematics\\": "src",
-			"TomTom\\TelematicsTest\\": "tests"
-		}
-	}
+  "name": "gravitybv/php-webfleet",
+  "description": "A wrapper for the TomTom Business Webfleet.connect API. PHP 7+",
+  "homepage": "https://github.com/gravitybv/php-webfleet",
+  "license": "MIT",
+  "type": "library",
+  "keywords": [
+    "webfleet",
+    "tomtom",
+    "telematics",
+    "api",
+    "wrapper"
+  ],
+  "authors": [
+    {
+      "name": "Gravity BV",
+      "email": "info@gravity.nl"
+    }
+  ],
+  "require": {
+    "php": ">=8.0",
+    "vlucas/phpdotenv": "^5.4.1",
+    "chillerlan/php-curl": "^1.0"
+  },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/shiftbase-com/php-curl"
+    }
+  ],
+  "require-dev": {
+    "phpunit/phpunit": "^10.3"
+  },
+  "autoload": {
+    "psr-4": {
+      "TomTom\\Telematics\\": "src",
+      "TomTom\\TelematicsTest\\": "tests"
+    }
+  }
 }

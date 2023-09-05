@@ -1,0 +1,14 @@
+{
+  "name": "php-webfleet",
+  "version": "1.1.0",
+  "description": "A wrapper for the [TomTom Business Webfleet.connect API](https://business.tomtom.com/partners/integration/resources/).",
+  "scripts": {
+    "format": "prettier --write --ignore-path .gitignore ./src"
+  },
+  "author": "Gravity BV",
+  "license": "NONE",
+  "dependencies": {
+    "@prettier/plugin-php": "^0.19.6",
+    "prettier": "^2.8.8"
+  }
+}

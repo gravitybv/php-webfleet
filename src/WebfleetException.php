@@ -17,6 +17,6 @@ use Exception;
 /**
  * placeholder
  */
-class WebfleetException extends Exception{
-
+class WebfleetException extends Exception
+{
 }

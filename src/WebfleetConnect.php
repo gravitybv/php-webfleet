@@ -16,9 +16,22 @@ use ReflectionClass;
 use TomTom\Telematics\HTTP\HTTPClientInterface;
 
 use TomTom\Telematics\Endpoints\{
-	Addresses, Areas, ConfigurationAndSecurity, Drivers, Events, GeocodingAndRouting,
-	LINKconnect, MessageQueues, Messages, MiscellaneousReports, Objects, Orders,
-	Reporting, TripsAndWorkingTimes, UserManagement, VehicleMaintenance
+    Addresses,
+    Areas,
+    ConfigurationAndSecurity,
+    Drivers,
+    Events,
+    GeocodingAndRouting,
+    LINKconnect,
+    MessageQueues,
+    Messages,
+    MiscellaneousReports,
+    Objects,
+    Orders,
+    Reporting,
+    TripsAndWorkingTimes,
+    UserManagement,
+    VehicleMaintenance,
 };
 
 /**
@@ -39,125 +52,139 @@ use TomTom\Telematics\Endpoints\{
  * @property Areas                    $Areas                    // 4.15
  * @property LINKconnect              $LINKconnect              // 4.16
  */
-class WebfleetConnect{
+class WebfleetConnect
+{
+    const INTERFACES = [
+        MessageQueues::class,
+        Objects::class,
+        Orders::class,
+        Messages::class,
+        Drivers::class,
+        Addresses::class,
+        Events::class,
+        TripsAndWorkingTimes::class,
+        MiscellaneousReports::class,
+        GeocodingAndRouting::class,
+        ConfigurationAndSecurity::class,
+        UserManagement::class,
+        VehicleMaintenance::class,
+        Reporting::class,
+        Areas::class,
+        LINKconnect::class,
+    ];
 
-	const INTERFACES = [
-		MessageQueues::class,
-		Objects::class,
-		Orders::class,
-		Messages::class,
-		Drivers::class,
-		Addresses::class,
-		Events::class,
-		TripsAndWorkingTimes::class,
-		MiscellaneousReports::class,
-		GeocodingAndRouting::class,
-		ConfigurationAndSecurity::class,
-		UserManagement::class,
-		VehicleMaintenance::class,
-		Reporting::class,
-		Areas::class,
-		LINKconnect::class,
-	];
+    /**
+     * @var array
+     */
+    protected $method_map = [];
 
-	/**
-	 * @var array
-	 */
-	protected $method_map = [];
+    /**
+     * @var string
+     */
+    protected $endpoint;
 
-	/**
-	 * @var string
-	 */
-	protected $endpoint;
+    /**
+     * @var \TomTom\Telematics\HTTP\HTTPClientInterface
+     */
+    protected $http;
 
-	/**
-	 * @var \TomTom\Telematics\HTTP\HTTPClientInterface
-	 */
-	protected $http;
+    /**
+     * @var \TomTom\Telematics\WebfleetOptions
+     */
+    protected $options;
 
-	/**
-	 * @var \TomTom\Telematics\WebfleetOptions
-	 */
-	protected $options;
+    /**
+     * WebfleetConnect constructor.
+     *
+     * @param \TomTom\Telematics\HTTP\HTTPClientInterface $http
+     * @param \TomTom\Telematics\WebfleetOptions          $options
+     */
+    public function __construct(
+        HTTPClientInterface $http,
+        WebfleetOptions $options,
+    ) {
+        $this->http = $http;
+        $this->options = $options;
 
-	/**
-	 * WebfleetConnect constructor.
-	 *
-	 * @param \TomTom\Telematics\HTTP\HTTPClientInterface $http
-	 * @param \TomTom\Telematics\WebfleetOptions          $options
-	 */
-	public function __construct(HTTPClientInterface $http, WebfleetOptions $options){
-		$this->http    = $http;
-		$this->options = $options;
+        $this->mapApiMethods();
+    }
 
-		$this->mapApiMethods();
-	}
+    /**
+     * @param string $interface
+     *
+     * @return \TomTom\Telematics\WebfleetEndpoint
+     * @throws \TomTom\Telematics\WebfleetException
+     */
+    public function __get(string $interface): WebfleetEndpoint
+    {
+        $interface = __NAMESPACE__ . "\\Endpoints\\" . $interface;
 
-	/**
-	 * @param string $interface
-	 *
-	 * @return \TomTom\Telematics\WebfleetEndpoint
-	 * @throws \TomTom\Telematics\WebfleetException
-	 */
-	public function __get(string $interface):WebfleetEndpoint{
-		$interface = __NAMESPACE__.'\\Endpoints\\'.$interface;
+        if (array_key_exists($interface, $this->method_map)) {
+            return new WebfleetEndpoint(
+                $this->http,
+                $this->options,
+                $interface,
+            );
+        }
 
-		if(array_key_exists($interface, $this->method_map)){
-			return new WebfleetEndpoint($this->http, $this->options, $interface);
-		}
+        throw new WebfleetException("interface does not exist: " . $interface);
+    }
 
-		throw new WebfleetException('interface does not exist: '.$interface);
-	}
+    /**
+     * Maps the WebfleetConnectInterface methods -> Interface name
+     */
+    protected function mapApiMethods()
+    {
+        foreach (self::INTERFACES as $interface) {
+            $reflection_class = new ReflectionClass($interface);
 
-	/**
-	 * Maps the WebfleetConnectInterface methods -> Interface name
-	 */
-	protected function mapApiMethods(){
+            foreach ($reflection_class->getMethods() as $method) {
+                $this->method_map[$interface][
+                    $method->name
+                ] = $reflection_class->getConstant($method->name);
+            }
+        }
+        #		file_put_contents(__DIR__.'/../config/webfleet_interface.json', json_encode($this->method_map, JSON_PRETTY_PRINT));
+    }
 
-		foreach(self::INTERFACES as $interface){
-			$reflection_class = new ReflectionClass($interface);
+    /**
+     * @return array
+     */
+    public function getMethods(): array
+    {
+        return $this->endpoint
+            ? $this->method_map[$this->endpoint]
+            : $this->method_map;
+    }
 
-			foreach($reflection_class->getMethods() as $method){
-				$this->method_map[$interface][$method->name] = $reflection_class->getConstant($method->name);
-			}
-		}
-#		file_put_contents(__DIR__.'/../config/webfleet_interface.json', json_encode($this->method_map, JSON_PRETTY_PRINT));
-	}
+    /**
+     * @param string $dms input = 11°12'56,6 O (TomTom API)
+     *
+     * @return string
+     */
+    public function dms2dec($dms)
+    {
+        $deg = explode(chr(176), trim($dms));
+        $min = explode(chr(39), $deg[1]);
 
-	/**
-	 * @return array
-	 */
-	public function getMethods():array {
-		return $this->endpoint ? $this->method_map[$this->endpoint] : $this->method_map;
-	}
+        return (in_array(substr($dms, -1), ["S", "W"], true) ? "-" : "") .
+            ($deg[0] + round(($min[0] * 60 + $min[1]) / 3600, 8));
+    }
 
-	/**
-	 * @param string $dms input = 11°12'56,6 O (TomTom API)
-	 *
-	 * @return string
-	 */
-	public function dms2dec($dms){
-		$deg = explode(chr(176), trim($dms));
-		$min = explode(chr(39), $deg[1]);
+    /**
+     * @param string $method
+     * @param int    $timestamp
+     *
+     * @return bool
+     */
+    protected function timerCheck(string $method, int $timestamp): bool
+    {
+        $limits = $this->method_map[$this->endpoint][$method]["limits"];
 
-		return (in_array(substr($dms, -1), ['S', 'W'], true) ? '-' : '').($deg[0]+round(($min[0]*60+$min[1])/3600,8));
-	}
+        if (time() > $timestamp + intval($limits[0] / $limits[1])) {
+            return true;
+        }
 
-	/**
-	 * @param string $method
-	 * @param int    $timestamp
-	 *
-	 * @return bool
-	 */
-	protected function timerCheck(string $method, int $timestamp):bool{
-
-		$limits = $this->method_map[$this->endpoint][$method]['limits'];
-
-		if(time() > $timestamp + intval($limits[0] / $limits[1])){
-			return true;
-		}
-
-		return false;
-	}
-
+        return false;
+    }
 }

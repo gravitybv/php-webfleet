@@ -18,45 +18,55 @@ use chillerlan\TinyCurl\{Request, RequestOptions, URL, URLException};
 /**
  *
  */
-class TinyCurlClient extends HTTPClientAbstract{
+class TinyCurlClient extends HTTPClientAbstract
+{
+    /**
+     * @var \chillerlan\TinyCurl\Request
+     */
+    protected $request;
 
-	/**
-	 * @var \chillerlan\TinyCurl\Request
-	 */
-	protected $request;
+    /**
+     * TinyCurlClient constructor.
+     *
+     * @param \chillerlan\TinyCurl\RequestOptions $requestOptions
+     */
+    public function __construct(RequestOptions $requestOptions)
+    {
+        $this->request = new Request($requestOptions);
+    }
 
-	/**
-	 * TinyCurlClient constructor.
-	 *
-	 * @param \chillerlan\TinyCurl\RequestOptions $requestOptions
-	 */
-	public function __construct(RequestOptions $requestOptions){
-		$this->request = new Request($requestOptions);
-	}
+    /**
+     * @param array  $params
+     * @param string $method
+     * @param mixed  $body
+     * @param array  $headers
+     *
+     * @return \TomTom\Telematics\WebfleetResponse
+     * @throws \TomTom\Telematics\WebfleetException
+     */
+    public function request(
+        array $params = [],
+        string $method = "GET",
+        $body = null,
+        array $headers = [],
+    ): WebfleetResponse {
+        try {
+            $url = new URL(
+                self::API_BASE,
+                $params,
+                $method,
+                $body,
+                $this->normalizeHeaders($headers),
+            );
+        } catch (URLException $e) {
+            throw new WebfleetException("invalid URL: " . $e->getMessage());
+        }
 
-	/**
-	 * @param array  $params
-	 * @param string $method
-	 * @param mixed  $body
-	 * @param array  $headers
-	 *
-	 * @return \TomTom\Telematics\WebfleetResponse
-	 * @throws \TomTom\Telematics\WebfleetException
-	 */
-	public function request(array $params = [], string $method = 'GET', $body = null, array $headers = []):WebfleetResponse{
+        $response = $this->request->fetch($url);
 
-		try{
-			$url = new URL(self::API_BASE, $params, $method, $body, $this->normalizeHeaders($headers));
-		}
-		catch(URLException $e){
-			throw new WebfleetException('invalid URL: '.$e->getMessage());
-		}
-
-		$response = $this->request->fetch($url);
-
-		return new WebfleetResponse([
-			'headers' => $response->headers,
-			'body'    => $response->body->content,
-		]);
-	}
+        return new WebfleetResponse([
+            "headers" => $response->headers,
+            "body" => $response->body->content,
+        ]);
+    }
 }

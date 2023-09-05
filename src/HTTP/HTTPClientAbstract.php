@@ -15,36 +15,34 @@ namespace TomTom\Telematics\HTTP;
 /**
  *
  */
-abstract class HTTPClientAbstract implements HTTPClientInterface{
+abstract class HTTPClientAbstract implements HTTPClientInterface
+{
+    /**
+     * @param array $headers
+     *
+     * @return array
+     */
+    public function normalizeHeaders(array $headers): array
+    {
+        $normalized_headers = [];
 
-	/**
-	 * @param array $headers
-	 *
-	 * @return array
-	 */
-	public function normalizeHeaders(array $headers):array {
-		$normalized_headers = [];
+        foreach ($headers as $key => $val) {
+            if (is_numeric($key)) {
+                $header = explode(":", $val, 2);
 
-		foreach($headers as $key => $val){
+                if (count($header) === 2) {
+                    $key = $header[0];
+                    $val = $header[1];
+                } else {
+                    continue;
+                }
+            }
 
-			if(is_numeric($key)){
-				$header = explode(':', $val, 2);
+            $key = ucfirst(strtolower($key));
 
-				if(count($header) === 2){
-					$key = $header[0];
-					$val = $header[1];
-				}
-				else{
-					continue;
-				}
-			}
+            $normalized_headers[$key] = trim($key) . ": " . trim($val);
+        }
 
-			$key = ucfirst(strtolower($key));
-
-			$normalized_headers[$key] = trim($key).': '.trim($val);
-		}
-
-		return $normalized_headers;
-	}
-
+        return $normalized_headers;
+    }
 }
