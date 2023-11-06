@@ -34,7 +34,7 @@ interface MiscellaneousReports
      */
     public function showIOReportExtern(
         array $params = [],
-        $dateRangeFilterParams,
+        $dateRangeFilterParams = [],
     ): WebfleetResponse;
 
     const showIOReportExtern = [
@@ -59,7 +59,7 @@ interface MiscellaneousReports
      */
     public function showAccelerationEvents(
         array $params = [],
-        $dateRangeFilterParams,
+        $dateRangeFilterParams = [],
     ): WebfleetResponse;
 
     const showAccelerationEvents = [
@@ -91,7 +91,7 @@ interface MiscellaneousReports
      */
     public function showSpeedingEvents(
         array $params = [],
-        $dateRangeFilterParams,
+        $dateRangeFilterParams = [],
     ): WebfleetResponse;
 
     const showSpeedingEvents = [
@@ -121,7 +121,7 @@ interface MiscellaneousReports
      */
     public function getCrashLog(
         array $params,
-        $dateRangeFilterParams,
+        $dateRangeFilterParams = [],
     ): WebfleetResponse;
 
     const getCrashLog = [

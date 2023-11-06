@@ -6,3 +6,4 @@ composer.lock
 *.pdf
 _stuff
 node_modules
+.history

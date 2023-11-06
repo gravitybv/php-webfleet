@@ -39,7 +39,7 @@ interface Reporting
      */
     public function getArchivedReportList(
         array $params = [],
-        $dateRangeFilter,
+        $dateRangeFilter = [],
     ): WebfleetResponse;
 
     const getArchivedReportList = [
@@ -122,7 +122,7 @@ interface Reporting
      */
     public function createReport(
         array $params,
-        $dateRangeFilter,
+        $dateRangeFilter = [],
     ): WebfleetResponse;
 
     const createReport = [
@@ -152,7 +152,7 @@ interface Reporting
      */
     public function sendReportViaMail(
         array $params,
-        $dateRangeFilter,
+        $dateRangeFilter = [],
     ): WebfleetResponse;
 
     const sendReportViaMail = [

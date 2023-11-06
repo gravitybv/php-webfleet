@@ -222,7 +222,7 @@ interface TripsAndWorkingTimes
      */
     public function showWorkingTimes(
         array $params,
-        $dateRangeFilterParams,
+        $dateRangeFilterParams = [],
     ): WebfleetResponse;
 
     const showWorkingTimes = [
@@ -249,7 +249,7 @@ interface TripsAndWorkingTimes
      */
     public function showStandStills(
         array $params,
-        $dateRangeFilterParams,
+        $dateRangeFilterParams = [],
     ): WebfleetResponse;
 
     const showStandStills = [
@@ -274,7 +274,7 @@ interface TripsAndWorkingTimes
      */
     public function showIdleExceptions(
         array $params = [],
-        $dateRangeFilterParams,
+        $dateRangeFilterParams = [],
     ): WebfleetResponse;
 
     const showIdleExceptions = [
@@ -305,7 +305,7 @@ interface TripsAndWorkingTimes
      */
     public function getObjectKPIs(
         array $params,
-        $dateRangeFilterParams,
+        $dateRangeFilterParams = [],
     ): WebfleetResponse;
 
     const getObjectKPIs = [
@@ -327,7 +327,7 @@ interface TripsAndWorkingTimes
      */
     public function getDriverKPIs(
         array $params,
-        $dateRangeFilterParams,
+        $dateRangeFilterParams = [],
     ): WebfleetResponse;
 
     const getDriverKPIs = [
