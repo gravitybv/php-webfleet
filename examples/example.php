@@ -10,21 +10,22 @@
 
 require_once __DIR__.'/../vendor/autoload.php';
 
-use chillerlan\TinyCurl\RequestOptions;
 use Dotenv\Dotenv;
-
 use Webfleet\{
-	WebfleetConnect, WebfleetOptions, HTTP\TinyCurlClient
+	WebfleetConnect, WebfleetOptions, HTTP\GuzzleClient
 };
 
 date_default_timezone_set('UTC');
 
 (new Dotenv(__DIR__.'/../config', '.env'))->load();
 
-$requestOptions = new RequestOptions([
-	'ca_info'    => __DIR__.'/../config/cacert.pem',
-	'user_agent' => 'chillerlan-php-webfleet/0.1 +https://github.com/codemasher/php-webfleet',
-]);
+$guzzleConfig = [
+	'timeout' => 30,
+	'verify' => __DIR__.'/../config/cacert.pem',
+	'headers' => [
+		'User-Agent' => 'gravitybv-php-webfleet/1.0 +https://github.com/gravitybv/php-webfleet',
+	],
+];
 
 $webfleetOptions = new WebfleetOptions([
 	'account'  => getenv('WEBFLEET_ACCOUNT'),
@@ -34,7 +35,7 @@ $webfleetOptions = new WebfleetOptions([
 	'lang'     => 'en',
 ]);
 
-$webfleet = (new WebfleetConnect(new TinyCurlClient($requestOptions), $webfleetOptions));
+$webfleet = (new WebfleetConnect(new GuzzleClient($guzzleConfig), $webfleetOptions));
 
 $wfGeocode = $webfleet->GeocodingAndRouting;
 
