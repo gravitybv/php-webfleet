@@ -1,21 +1,24 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * Class WebfleetConnect
  *
  * @filesource   WebfleetConnect.php
  * @created      14.03.2017
- * @package      TomTom\Telematics
+ * @package      Webfleet
  * @author       Smiley <smiley@chillerlan.net>
  * @copyright    2017 Smiley
  * @license      MIT
  */
 
-namespace TomTom\Telematics;
+namespace Webfleet;
 
 use ReflectionClass;
-use TomTom\Telematics\HTTP\HTTPClientInterface;
+use Webfleet\HTTP\HTTPClientInterface;
 
-use TomTom\Telematics\Endpoints\{
+use Webfleet\Endpoints\{
     Addresses,
     Areas,
     ConfigurationAndSecurity,
@@ -54,7 +57,10 @@ use TomTom\Telematics\Endpoints\{
  */
 class WebfleetConnect
 {
-    const INTERFACES = [
+    /**
+     * @var array<class-string>
+     */
+    public const INTERFACES = [
         MessageQueues::class,
         Objects::class,
         Orders::class,
@@ -74,30 +80,24 @@ class WebfleetConnect
     ];
 
     /**
-     * @var array
+     * @var array<string, array<string, mixed>>
      */
-    protected $method_map = [];
+    protected array $method_map = [];
 
-    /**
-     * @var string
-     */
-    protected $endpoint;
+    protected string|null $endpoint = null;
 
-    /**
-     * @var \TomTom\Telematics\HTTP\HTTPClientInterface
-     */
-    protected $http;
+    protected HTTPClientInterface $http;
 
-    /**
-     * @var \TomTom\Telematics\WebfleetOptions
-     */
-    protected $options;
+    protected WebfleetOptions $options;
 
     /**
      * WebfleetConnect constructor.
      *
-     * @param \TomTom\Telematics\HTTP\HTTPClientInterface $http
-     * @param \TomTom\Telematics\WebfleetOptions          $options
+     * @param \Webfleet\HTTP\HTTPClientInterface $http
+     * @param \Webfleet\WebfleetOptions          $options
+     */
+    /**
+     * WebfleetConnect constructor.
      */
     public function __construct(
         HTTPClientInterface $http,
@@ -110,10 +110,9 @@ class WebfleetConnect
     }
 
     /**
-     * @param string $interface
+     * Magic getter for endpoint interfaces.
      *
-     * @return \TomTom\Telematics\WebfleetEndpoint
-     * @throws \TomTom\Telematics\WebfleetException
+     * @throws WebfleetException
      */
     public function __get(string $interface): WebfleetEndpoint
     {
@@ -131,9 +130,9 @@ class WebfleetConnect
     }
 
     /**
-     * Maps the WebfleetConnectInterface methods -> Interface name
+     * Maps the WebfleetConnectInterface methods -> Interface name.
      */
-    protected function mapApiMethods()
+    protected function mapApiMethods(): void
     {
         foreach (self::INTERFACES as $interface) {
             $reflection_class = new ReflectionClass($interface);
@@ -144,25 +143,26 @@ class WebfleetConnect
                 ] = $reflection_class->getConstant($method->name);
             }
         }
-        #		file_put_contents(__DIR__.'/../config/webfleet_interface.json', json_encode($this->method_map, JSON_PRETTY_PRINT));
     }
 
     /**
-     * @return array
+     * Get all available methods.
+     *
+     * @return array<string, mixed>
      */
     public function getMethods(): array
     {
-        return $this->endpoint
+        return $this->endpoint !== null
             ? $this->method_map[$this->endpoint]
             : $this->method_map;
     }
 
     /**
-     * @param string $dms input = 11°12'56,6 O (TomTom API)
+     * Convert DMS (Degrees, Minutes, Seconds) to decimal coordinates.
      *
-     * @return string
+     * @param string $dms Input format: 11°12'56,6 O (TomTom API)
      */
-    public function dms2dec($dms)
+    public function dms2dec(string $dms): string
     {
         $deg = explode(chr(176), trim($dms));
         $min = explode(chr(39), $deg[1]);
@@ -172,10 +172,7 @@ class WebfleetConnect
     }
 
     /**
-     * @param string $method
-     * @param int    $timestamp
-     *
-     * @return bool
+     * Check if sufficient time has passed for rate limiting.
      */
     protected function timerCheck(string $method, int $timestamp): bool
     {

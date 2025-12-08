@@ -1,18 +1,20 @@
 <?php
+
+declare(strict_types=1);
 /**
  * Interface ConfigurationAndSecurity
  *
  * @filesource   ConfigurationAndSecurity.php
  * @created      14.03.2017
- * @package      TomTom\Telematics\Endpoints
+ * @package      Webfleet\Endpoints
  * @author       Smiley <smiley@chillerlan.net>
  * @copyright    2017 Smiley
  * @license      MIT
  */
 
-namespace TomTom\Telematics\Endpoints;
+namespace Webfleet\Endpoints;
 
-use TomTom\Telematics\WebfleetResponse;
+use Webfleet\WebfleetResponse;
 
 /**
  * 4.11 Configuration and security
@@ -34,7 +36,7 @@ interface ConfigurationAndSecurity
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function showSettings(array $params): WebfleetResponse;
 
@@ -53,7 +55,7 @@ interface ConfigurationAndSecurity
      * account, username or password to authorise further requests to
      * WEBFLEET.connect.
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function createSession(): WebfleetResponse;
 
@@ -73,7 +75,7 @@ interface ConfigurationAndSecurity
      * indicate sessiontoken of the session that you want to invalidate, see Authentication
      * parameters.
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function terminateSession(): WebfleetResponse;
 
@@ -95,7 +97,7 @@ interface ConfigurationAndSecurity
      * The settings of properties of order states correspond to the settings you can make
      * in the WEBFLEET user interface.
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function showAccountOrderStates(): WebfleetResponse;
 
@@ -115,7 +117,7 @@ interface ConfigurationAndSecurity
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function updateAccountOrderState(array $params): WebfleetResponse;
 
@@ -136,7 +138,7 @@ interface ConfigurationAndSecurity
      * The settings of the order workflow control correspond to the settings you can make
      * in the WEBFLEET user interface.
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function showAccountOrderAutomations(): WebfleetResponse;
 
@@ -156,7 +158,7 @@ interface ConfigurationAndSecurity
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function updateAccountOrderAutomation(
         array $params,
@@ -177,7 +179,7 @@ interface ConfigurationAndSecurity
      * synchronise these account status messages. For a configuration for individual
      * objects refer to getStatusMessages.
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function getAccountStatusMessages(): WebfleetResponse;
 
@@ -198,7 +200,7 @@ interface ConfigurationAndSecurity
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function getStatusMessages(array $params): WebfleetResponse;
 
@@ -215,7 +217,7 @@ interface ConfigurationAndSecurity
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function setVehicleConfig(array $params): WebfleetResponse;
 
@@ -238,7 +240,7 @@ interface ConfigurationAndSecurity
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function getVehicleConfig(array $params = []): WebfleetResponse;
 
@@ -258,7 +260,7 @@ interface ConfigurationAndSecurity
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function setStatusMessages(array $params): WebfleetResponse;
 
@@ -277,7 +279,7 @@ interface ConfigurationAndSecurity
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function setAccountStatusMessages(array $params): WebfleetResponse;
 

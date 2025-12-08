@@ -1,45 +1,47 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * Interface HTTPClientInterface
  *
  * @filesource   HTTPClientInterface.php
  * @created      14.03.2017
- * @package      TomTom\Telematics\HTTP
+ * @package      Webfleet\HTTP
  * @author       Smiley <smiley@chillerlan.net>
  * @copyright    2017 Smiley
  * @license      MIT
  */
 
-namespace TomTom\Telematics\HTTP;
+namespace Webfleet\HTTP;
 
-use TomTom\Telematics\WebfleetResponse;
+use Webfleet\WebfleetResponse;
 
 /**
- *
+ * HTTP client interface for Webfleet API requests.
  */
 interface HTTPClientInterface
 {
-    const API_BASE = "https://csv.webfleet.com/extern/";
+    public const API_BASE = "https://csv.webfleet.com/extern/";
 
     /**
-     * @param array  $params
-     * @param string $method
-     * @param mixed  $body
-     * @param array  $headers
+     * Send an HTTP request to the Webfleet API.
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @param array<string, mixed> $params
+     * @param array<string, string> $headers
      */
     public function request(
         array $params = [],
         string $method = "GET",
-        $body = null,
+        mixed $body = null,
         array $headers = [],
     ): WebfleetResponse;
 
     /**
-     * @param array $headers
+     * Normalize HTTP headers to a consistent format.
      *
-     * @return array
+     * @param array<string, string> $headers
+     * @return array<string, string>
      */
     public function normalizeHeaders(array $headers): array;
 }

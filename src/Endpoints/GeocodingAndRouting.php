@@ -1,18 +1,20 @@
 <?php
+
+declare(strict_types=1);
 /**
  * Interface GeocodingAndRouting
  *
  * @filesource   GeocodingAndRouting.php
  * @created      14.03.2017
- * @package      TomTom\Telematics\Endpoints
+ * @package      Webfleet\Endpoints
  * @author       Smiley <smiley@chillerlan.net>
  * @copyright    2017 Smiley
  * @license      MIT
  */
 
-namespace TomTom\Telematics\Endpoints;
+namespace Webfleet\Endpoints;
 
-use TomTom\Telematics\WebfleetResponse;
+use Webfleet\WebfleetResponse;
 
 /**
  * 4.10 Geocoding and routing
@@ -28,7 +30,7 @@ interface GeocodingAndRouting
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function geocodeAddress(array $params): WebfleetResponse;
 
@@ -53,7 +55,7 @@ interface GeocodingAndRouting
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function calcRouteSimpleExtern(array $params): WebfleetResponse;
 

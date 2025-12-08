@@ -1,26 +1,29 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * Class Container
  *
  * @filesource   Container.php
  * @created      14.03.2017
- * @package      TomTom\Telematics
+ * @package      Webfleet
  * @author       Smiley <smiley@chillerlan.net>
  * @copyright    2017 Smiley
  * @license      MIT
  */
 
-namespace TomTom\Telematics;
+namespace Webfleet;
 
 /**
- * a generic container with getter and setter
+ * A generic container with getter and setter for dynamic properties.
  */
 abstract class Container
 {
     /**
-     * Boa constructor.
+     * Container constructor.
      *
-     * @param array $properties
+     * @param array<string, mixed> $properties
      */
     public function __construct(array $properties = [])
     {
@@ -30,13 +33,11 @@ abstract class Container
     }
 
     /**
-     * David Getter
+     * Magic getter for properties.
      *
-     * @param string $property
-     *
-     * @return mixed|bool
+     * @return mixed Returns the property value or false if not found.
      */
-    public function __get(string $property)
+    public function __get(string $property): mixed
     {
         if (property_exists($this, $property)) {
             return $this->{$property};
@@ -46,14 +47,9 @@ abstract class Container
     }
 
     /**
-     * Jet-setter
-     *
-     * @param string $property
-     * @param mixed  $value
-     *
-     * @return void
+     * Magic setter for properties.
      */
-    public function __set(string $property, $value)
+    public function __set(string $property, mixed $value): void
     {
         if (property_exists($this, $property)) {
             $this->{$property} = $value;
@@ -61,7 +57,9 @@ abstract class Container
     }
 
     /**
-     * @return array
+     * Convert the container to an array.
+     *
+     * @return array<string, mixed>
      */
     public function __toArray(): array
     {

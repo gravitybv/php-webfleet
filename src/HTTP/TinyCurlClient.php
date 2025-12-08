@@ -1,34 +1,32 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * Class TinyCurlClient
  *
  * @filesource   TinyCurlClient.php
  * @created      14.03.2017
- * @package      TomTom\Telematics\HTTP
+ * @package      Webfleet\HTTP
  * @author       Smiley <smiley@chillerlan.net>
  * @copyright    2017 Smiley
  * @license      MIT
  */
 
-namespace TomTom\Telematics\HTTP;
+namespace Webfleet\HTTP;
 
-use TomTom\Telematics\{WebfleetException, WebfleetResponse};
+use Webfleet\{WebfleetException, WebfleetResponse};
 use chillerlan\TinyCurl\{Request, RequestOptions, URL, URLException};
 
 /**
- *
+ * HTTP client implementation using TinyCurl library.
  */
 class TinyCurlClient extends HTTPClientAbstract
 {
-    /**
-     * @var \chillerlan\TinyCurl\Request
-     */
-    protected $request;
+    protected Request $request;
 
     /**
      * TinyCurlClient constructor.
-     *
-     * @param \chillerlan\TinyCurl\RequestOptions $requestOptions
      */
     public function __construct(RequestOptions $requestOptions)
     {
@@ -36,20 +34,30 @@ class TinyCurlClient extends HTTPClientAbstract
     }
 
     /**
-     * @param array  $params
-     * @param string $method
-     * @param mixed  $body
-     * @param array  $headers
+     * Send an HTTP request to the Webfleet API.
      *
-     * @return \TomTom\Telematics\WebfleetResponse
-     * @throws \TomTom\Telematics\WebfleetException
+     * @param array<string, mixed> $params
+     * @param array<string, string> $headers
+     * @throws WebfleetException
      */
     public function request(
         array $params = [],
         string $method = "GET",
-        $body = null,
+        mixed $body = null,
         array $headers = [],
     ): WebfleetResponse {
+        // Extract username and password for Basic Auth
+        $username = $params['username'] ?? '';
+        $password = $params['password'] ?? '';
+        
+        // Remove username and password from URL params
+        unset($params['username'], $params['password']);
+        
+        // Add Basic Auth header if credentials are provided
+        if (!empty($username) && !empty($password)) {
+            $headers['Authorization'] = 'Basic ' . base64_encode($username . ':' . $password);
+        }
+        
         try {
             $url = new URL(
                 self::API_BASE,

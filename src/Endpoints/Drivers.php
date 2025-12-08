@@ -1,18 +1,20 @@
 <?php
+
+declare(strict_types=1);
 /**
  * Interface Drivers
  *
  * @filesource   Drivers.php
  * @created      14.03.2017
- * @package      TomTom\Telematics\Endpoints
+ * @package      Webfleet\Endpoints
  * @author       Smiley <smiley@chillerlan.net>
  * @copyright    2017 Smiley
  * @license      MIT
  */
 
-namespace TomTom\Telematics\Endpoints;
+namespace Webfleet\Endpoints;
 
-use TomTom\Telematics\WebfleetResponse;
+use Webfleet\WebfleetResponse;
 
 /**
  * 4.5 Drivers
@@ -28,7 +30,7 @@ interface Drivers
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function showDriverReportExtern(
         array $params = [],
@@ -53,7 +55,7 @@ interface Drivers
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function insertDriverExtern(array $params): WebfleetResponse;
 
@@ -89,7 +91,7 @@ interface Drivers
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function updateDriverExtern(array $params): WebfleetResponse;
 
@@ -128,7 +130,7 @@ interface Drivers
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function deleteDriverExtern(array $params): WebfleetResponse;
 
@@ -150,7 +152,7 @@ interface Drivers
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function showOptiDriveIndicator(
         array $params = [],
@@ -169,7 +171,7 @@ interface Drivers
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function showDriverGroups(array $params = []): WebfleetResponse;
 
@@ -189,7 +191,7 @@ interface Drivers
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function showDriverGroupDrivers(
         array $params = [],
@@ -208,7 +210,7 @@ interface Drivers
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function attachDriverToGroup(array $params): WebfleetResponse;
 
@@ -225,7 +227,7 @@ interface Drivers
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function detachDriverFromGroup(array $params): WebfleetResponse;
 
@@ -244,7 +246,7 @@ interface Drivers
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function insertDriverGroup(array $params): WebfleetResponse;
 
@@ -262,7 +264,7 @@ interface Drivers
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function deleteDriverGroup(array $params): WebfleetResponse;
 
@@ -282,7 +284,7 @@ interface Drivers
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function updateDriverGroup(array $params): WebfleetResponse;
 
@@ -306,7 +308,7 @@ interface Drivers
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function attachDriverToVehicle(array $params): WebfleetResponse;
 
@@ -327,7 +329,7 @@ interface Drivers
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function detachDriverFromVehicle(array $params): WebfleetResponse;
 

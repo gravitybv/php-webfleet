@@ -1,18 +1,20 @@
 <?php
+
+declare(strict_types=1);
 /**
  * Interface Objects
  *
  * @filesource   Objects.php
  * @created      14.03.2017
- * @package      TomTom\Telematics\Endpoints
+ * @package      Webfleet\Endpoints
  * @author       Smiley <smiley@chillerlan.net>
  * @copyright    2017 Smiley
  * @license      MIT
  */
 
-namespace TomTom\Telematics\Endpoints;
+namespace Webfleet\Endpoints;
 
-use TomTom\Telematics\WebfleetResponse;
+use Webfleet\WebfleetResponse;
 
 /**
  * 4.2 Objects
@@ -36,7 +38,7 @@ interface Objects
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function showObjectReportExtern(
         array $params = [],
@@ -58,11 +60,54 @@ interface Objects
     /**
      * 4.2.2 showVehicleReportExtern
      *
-     * Lists all objects of type "Vehicle".
+     * Lists all objects of type "Vehicle" with comprehensive vehicle master data.
      *
-     * @param array $params
+     * Response fields (see \Webfleet\Responses\VehicleReport):
+     * - objectno (string max:10): Identifying number of an object. Unique within account, case-sensitive
+     * - objectname (string): Display name of an object
+     * - licenseplatenumber (string): License plate number
+     * - vehicletype (string): Vehicle type (see updateVehicle for valid values)
+     * - width (string): Vehicle width
+     * - length (string): Vehicle length
+     * - height (string): Vehicle height
+     * - maxweight (string): Maximum weight
+     * - netweight (string): Net weight
+     * - netload (string): Net load
+     * - power (string): Vehicle power
+     * - numaxes (string): Number of axles
+     * - identnumber (string max:20): VIN (Vehicle Identification Number). Read-only when connected to FMS/Tachograph/LINK 105/ecoPLUS
+     * - registrationdate (string): Registration date
+     * - vh_avgfuelusage (int): Vehicle-based fuel consumption reference value, in ml/100 km
+     * - ep_avgfuelusage (int): ecoPLUS-based fuel consumption reference value, in ml/100 km
+     * - fl_avgfuelusage (int): Fleet-based fuel consumption reference value, in ml/100km
+     * - vh_fueltype (int 0-9): Vehicle configured fuel type (see \Webfleet\Enums\FuelType)
+     * - ep_fueltype (int 1-2): Fuel type determined by ecoPLUS (1=diesel, 2=gasoline)
+     * - fl_fueltype (int 0-9): Fleet based fuel type (see \Webfleet\Enums\FuelType)
+     * - enginesize (int): Engine size in ccm
+     * - ep_btaddress (string max:17): ecoPLUS Bluetooth MAC-48/EUI-48 address (e.g., 00:13:6C:88:26:0B)
+     * - speedlimit (float 0-300): Speed limit in km/h
+     * - vehiclecolor (string): Vehicle color (see \Webfleet\Enums\VehicleColor)
+     * - description (string max:500): Vehicle description
+     * - objectuid (string max:30): Unique, unchangeable identifier. Can be used alternatively to objectno
+     * - vh_rpmlimit (int): Vehicle engine's maximum allowed RPM (LINK 510/710 connected to FMS)
+     * - fl_rpmlimit (int): Fleet-wide engine's maximum allowed RPM (LINK 510/710 connected to FMS)
+     * - externalid (string): For future use
+     * - obu_btaddress (string max:17): LINK device Bluetooth address (LINK 510/710/410 firmware 3.4+)
+     * - fueltanksize (int): Size of the fuel tank in litres
+     * - ep_type (int): Type of OBDII dongle (1=ecoPLUS, 2=LINK 105, see \Webfleet\Enums\EpType)
+     * - manufacturedyear (int): Year in which the vehicle was manufactured
+     * - fuelreference (int 0-2): Fuel reference type (0=fleet, 1=vehicle, 2=ecoPLUS, see \Webfleet\Enums\FuelReference)
+     * - accelerationvehicletype (string): Acceleration vehicle type for calibration (heavy_weight, medium_weight, light_weight, see \Webfleet\Enums\AccelerationVehicleType)
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @param array $params Optional filter parameters
+     *
+     * @return \Webfleet\WebfleetResponse
+     * @see \Webfleet\Responses\VehicleReport
+     * @see \Webfleet\Enums\FuelType
+     * @see \Webfleet\Enums\VehicleColor
+     * @see \Webfleet\Enums\EpType
+     * @see \Webfleet\Enums\FuelReference
+     * @see \Webfleet\Enums\AccelerationVehicleType
      */
     public function showVehicleReportExtern(
         array $params = [],
@@ -97,7 +142,7 @@ interface Objects
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function showNearestVehicles(array $params): WebfleetResponse;
 
@@ -114,7 +159,7 @@ interface Objects
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function showContracts(array $params = []): WebfleetResponse;
 
@@ -131,7 +176,7 @@ interface Objects
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function updateVehicle(array $params): WebfleetResponse;
 
@@ -180,7 +225,7 @@ interface Objects
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function showObjectGroups(array $params = []): WebfleetResponse;
 
@@ -198,7 +243,7 @@ interface Objects
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function showObjectGroupObjects(
         array $params = [],
@@ -217,7 +262,7 @@ interface Objects
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function attachObjectToGroup(array $params): WebfleetResponse;
 
@@ -234,7 +279,7 @@ interface Objects
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function detachObjectFromGroup(array $params): WebfleetResponse;
 
@@ -251,7 +296,7 @@ interface Objects
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function insertObjectGroup(array $params): WebfleetResponse;
 
@@ -269,7 +314,7 @@ interface Objects
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function deleteObjectGroup(array $params): WebfleetResponse;
 
@@ -287,7 +332,7 @@ interface Objects
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function updateObjectGroup(array $params): WebfleetResponse;
 
@@ -305,7 +350,7 @@ interface Objects
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function switchOutput(array $params): WebfleetResponse;
 
@@ -326,7 +371,7 @@ interface Objects
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function showWakeupTimers(array $params = []): WebfleetResponse;
 
@@ -346,7 +391,7 @@ interface Objects
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function updateWakeupTimers(array $params): WebfleetResponse;
 
@@ -378,7 +423,7 @@ interface Objects
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function getObjectFeatures(array $params = []): WebfleetResponse;
 
@@ -395,7 +440,7 @@ interface Objects
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function updateContractInfo(array $params): WebfleetResponse;
 

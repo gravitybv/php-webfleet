@@ -1,18 +1,20 @@
 <?php
+
+declare(strict_types=1);
 /**
  * Interface Events
  *
  * @filesource   Events.php
  * @created      14.03.2017
- * @package      TomTom\Telematics\Endpoints
+ * @package      Webfleet\Endpoints
  * @author       Smiley <smiley@chillerlan.net>
  * @copyright    2017 Smiley
  * @license      MIT
  */
 
-namespace TomTom\Telematics\Endpoints;
+namespace Webfleet\Endpoints;
 
-use TomTom\Telematics\WebfleetResponse;
+use Webfleet\WebfleetResponse;
 
 /**
  * 4.7 Events
@@ -30,7 +32,7 @@ interface Events
      * @param array $params
      * @param array $dateRangeFilterParams
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function showEventReportExtern(
         array $params = [],
@@ -57,7 +59,7 @@ interface Events
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function acknowledgeEventExtern(array $params): WebfleetResponse;
 
@@ -74,7 +76,7 @@ interface Events
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function resolveEventExtern(array $params): WebfleetResponse;
 
@@ -91,7 +93,7 @@ interface Events
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function getEventForwardConfigs(
         array $params = [],
@@ -113,7 +115,7 @@ interface Events
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function getEventForwardConfigRecipients(
         array $params,
@@ -132,7 +134,7 @@ interface Events
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function insertEventForwardConfig(array $params): WebfleetResponse;
 
@@ -149,7 +151,7 @@ interface Events
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function updateEventForwardConfig(array $params): WebfleetResponse;
 
@@ -166,7 +168,7 @@ interface Events
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function deleteEventForwardConfig(array $params): WebfleetResponse;
 

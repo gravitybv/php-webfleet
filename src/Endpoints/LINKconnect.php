@@ -1,18 +1,20 @@
 <?php
+
+declare(strict_types=1);
 /**
  * Interface LINKconnect
  *
  * @filesource   LINKconnect.php
  * @created      14.03.2017
- * @package      TomTom\Telematics\Endpoints
+ * @package      Webfleet\Endpoints
  * @author       Smiley <smiley@chillerlan.net>
  * @copyright    2017 Smiley
  * @license      MIT
  */
 
-namespace TomTom\Telematics\Endpoints;
+namespace Webfleet\Endpoints;
 
-use TomTom\Telematics\WebfleetResponse;
+use Webfleet\WebfleetResponse;
 
 /**
  * 4.16 LINK.connect
@@ -40,7 +42,7 @@ interface LINKconnect
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function sendAuxDeviceData(array $params): WebfleetResponse;
 
@@ -58,7 +60,7 @@ interface LINKconnect
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function getLocalAuxDeviceConfig(
         array $params = [],
@@ -80,7 +82,7 @@ interface LINKconnect
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function configureLocalAuxDevice(array $params): WebfleetResponse;
 
@@ -106,7 +108,7 @@ interface LINKconnect
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function getRemoteAuxDeviceConfig(array $params): WebfleetResponse;
 
@@ -127,7 +129,7 @@ interface LINKconnect
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function configureRemoteAuxDevice(array $params): WebfleetResponse;
 
@@ -155,7 +157,7 @@ interface LINKconnect
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function removeRemoteAuxDeviceConfig(
         array $params,
@@ -177,7 +179,7 @@ interface LINKconnect
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function clearAuxDeviceDataQueue(array $params): WebfleetResponse;
 
@@ -201,7 +203,7 @@ interface LINKconnect
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function resetAuxDeviceData(array $params): WebfleetResponse;
 

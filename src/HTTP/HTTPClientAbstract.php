@@ -1,26 +1,30 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * Class HTTPClientAbstract
  *
  * @filesource   HTTPClientAbstract.php
  * @created      14.03.2017
- * @package      TomTom\Telematics\HTTP
+ * @package      Webfleet\HTTP
  * @author       Smiley <smiley@chillerlan.net>
  * @copyright    2017 Smiley
  * @license      MIT
  */
 
-namespace TomTom\Telematics\HTTP;
+namespace Webfleet\HTTP;
 
 /**
- *
+ * Abstract HTTP client with common functionality.
  */
 abstract class HTTPClientAbstract implements HTTPClientInterface
 {
     /**
-     * @param array $headers
+     * Normalize HTTP headers to a consistent format.
      *
-     * @return array
+     * @param array<string, string> $headers
+     * @return array<string, string>
      */
     public function normalizeHeaders(array $headers): array
     {

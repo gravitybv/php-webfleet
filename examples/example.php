@@ -13,7 +13,7 @@ require_once __DIR__.'/../vendor/autoload.php';
 use chillerlan\TinyCurl\RequestOptions;
 use Dotenv\Dotenv;
 
-use TomTom\Telematics\{
+use Webfleet\{
 	WebfleetConnect, WebfleetOptions, HTTP\TinyCurlClient
 };
 

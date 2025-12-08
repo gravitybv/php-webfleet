@@ -1,18 +1,20 @@
 <?php
+
+declare(strict_types=1);
 /**
  * Interface Addresses
  *
  * @filesource   Addresses.php
  * @created      14.03.2017
- * @package      TomTom\Telematics\Endpoints
+ * @package      Webfleet\Endpoints
  * @author       Smiley <smiley@chillerlan.net>
  * @copyright    2017 Smiley
  * @license      MIT
  */
 
-namespace TomTom\Telematics\Endpoints;
+namespace Webfleet\Endpoints;
 
-use TomTom\Telematics\WebfleetResponse;
+use Webfleet\WebfleetResponse;
 
 /**
  * 4.6 Addresses
@@ -31,7 +33,7 @@ interface Addresses
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function showAddressReportExtern(
         array $params = [],
@@ -54,7 +56,7 @@ interface Addresses
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function showAddressGroupReportExtern(
         array $params = [],
@@ -75,7 +77,7 @@ interface Addresses
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function showAddressGroupAddressReportExtern(
         array $params = [],
@@ -96,7 +98,7 @@ interface Addresses
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function insertAddressExtern(array $params): WebfleetResponse;
 
@@ -140,7 +142,7 @@ interface Addresses
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function updateAddressExtern(array $params): WebfleetResponse;
 
@@ -180,7 +182,7 @@ interface Addresses
      * @param array $params
      *
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function deleteAddressExtern(array $params): WebfleetResponse;
 
@@ -195,7 +197,7 @@ interface Addresses
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function attachAddressToGroupExtern(array $params): WebfleetResponse;
 
@@ -212,7 +214,7 @@ interface Addresses
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function detachAddressFromGroupExtern(
         array $params,
@@ -231,7 +233,7 @@ interface Addresses
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function insertAddressGroupExtern(array $params): WebfleetResponse;
 
@@ -249,7 +251,7 @@ interface Addresses
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function deleteAddressGroupExtern(array $params): WebfleetResponse;
 
