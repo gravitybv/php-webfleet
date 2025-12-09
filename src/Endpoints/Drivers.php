@@ -15,6 +15,8 @@ declare(strict_types=1);
 namespace Webfleet\Endpoints;
 
 use Webfleet\WebfleetResponse;
+use Webfleet\Requests\InsertDriverRequest;
+use Webfleet\Requests\UpdateDriverRequest;
 
 /**
  * 4.5 Drivers
@@ -53,11 +55,11 @@ interface Drivers
      *
      * This action creates a driver.
      *
-     * @param array $params
+     * @param InsertDriverRequest $request
      *
      * @return \Webfleet\WebfleetResponse
      */
-    public function insertDriverExtern(array $params): WebfleetResponse;
+    public function insertDriverExtern(InsertDriverRequest $request): WebfleetResponse;
 
     const insertDriverExtern = [
         "required" => ["driverno", "name"],
@@ -89,11 +91,11 @@ interface Drivers
      *
      * This action updates driver details.
      *
-     * @param array $params
+     * @param UpdateDriverRequest $request
      *
      * @return \Webfleet\WebfleetResponse
      */
-    public function updateDriverExtern(array $params): WebfleetResponse;
+    public function updateDriverExtern(UpdateDriverRequest $request): WebfleetResponse;
 
     const updateDriverExtern = [
         "required" => ["driveruid"],
