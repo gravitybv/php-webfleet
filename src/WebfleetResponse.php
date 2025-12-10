@@ -1,42 +1,48 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * Class WebfleetResponse
  *
  * @filesource   WebfleetResponse.php
  * @created      14.03.2017
- * @package      TomTom\Telematics
+ * @package      Webfleet
  * @author       Smiley <smiley@chillerlan.net>
  * @copyright    2017 Smiley
  * @license      MIT
  */
 
-namespace TomTom\Telematics;
+namespace Webfleet;
+
+use stdClass;
 
 /**
- * @property array          $headers
- * @property string         $body
- * @property bool|\stdClass $json
+ * @property array<string, mixed> $headers
+ * @property string $body
+ * @property stdClass|array<mixed>|null $json
+ * @property float|null $request_time
+ * @property float|null $response_time
  */
 class WebfleetResponse extends Container
 {
     /**
-     * @var array
+     * @var array<string, mixed>
      */
-    protected $headers = [];
+    protected array $headers = [];
 
-    protected $request_time;
-    protected $response_time;
+    protected float|null $request_time = null;
+    protected float|null $response_time = null;
 
-    /**
-     * @var string
-     */
-    protected $body;
+    protected string $body = '';
 
-    public function __get(string $property)
+    public function __get(string $property): mixed
     {
-        if ($property === "json") {
-            return json_decode($this->body);
-        } elseif (property_exists($this, $property)) {
+        if ($property === 'json') {
+            return json_decode($this->body, false);
+        }
+
+        if (property_exists($this, $property)) {
             return $this->{$property};
         }
 

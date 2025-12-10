@@ -1,21 +1,24 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * Class WebfleetException
  *
  * @filesource   WebfleetException.php
  * @created      14.03.2017
- * @package      TomTom\Telematics
+ * @package      Webfleet
  * @author       Smiley <smiley@chillerlan.net>
  * @copyright    2015 Smiley
  * @license      MIT
  */
 
-namespace TomTom\Telematics;
+namespace Webfleet;
 
 use Exception;
 
 /**
- * placeholder
+ * Custom exception for Webfleet API errors.
  */
 class WebfleetException extends Exception
 {

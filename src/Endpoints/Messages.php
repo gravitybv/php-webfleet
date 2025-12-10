@@ -1,18 +1,20 @@
 <?php
+
+declare(strict_types=1);
 /**
  * Interface Messages
  *
  * @filesource   Messages.php
  * @created      14.03.2017
- * @package      TomTom\Telematics\Endpoints
+ * @package      Webfleet\Endpoints
  * @author       Smiley <smiley@chillerlan.net>
  * @copyright    2017 Smiley
  * @license      MIT
  */
 
-namespace TomTom\Telematics\Endpoints;
+namespace Webfleet\Endpoints;
 
-use TomTom\Telematics\WebfleetResponse;
+use Webfleet\WebfleetResponse;
 
 /**
  * 4.4 Messages
@@ -30,7 +32,7 @@ interface Messages
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function sendTextMessageExtern(array $params): WebfleetResponse;
 
@@ -47,7 +49,7 @@ interface Messages
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function clearTextMessagesExtern(array $params): WebfleetResponse;
 
@@ -68,7 +70,7 @@ interface Messages
      * @param array $params
      * @param array $dateRangeParams
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function showMessages(
         array $params = [],
@@ -96,7 +98,7 @@ interface Messages
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function sendBinaryMessage(array $params): WebfleetResponse;
 
@@ -120,7 +122,7 @@ interface Messages
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function resetBinaryMessages(array $params): WebfleetResponse;
 
@@ -142,7 +144,7 @@ interface Messages
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function clearBinaryMessages(array $params): WebfleetResponse;
 

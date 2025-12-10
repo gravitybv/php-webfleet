@@ -1,18 +1,20 @@
 <?php
+
+declare(strict_types=1);
 /**
  * Interface VehicleMaintenance
  *
  * @filesource   VehicleMaintenance.php
  * @created      14.03.2017
- * @package      TomTom\Telematics\Endpoints
+ * @package      Webfleet\Endpoints
  * @author       Smiley <smiley@chillerlan.net>
  * @copyright    2017 Smiley
  * @license      MIT
  */
 
-namespace TomTom\Telematics\Endpoints;
+namespace Webfleet\Endpoints;
 
-use TomTom\Telematics\WebfleetResponse;
+use Webfleet\WebfleetResponse;
 
 /**
  * 4.13 Vehicle Maintenance
@@ -29,7 +31,7 @@ interface VehicleMaintenance
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function insertMaintenanceSchedule(array $params): WebfleetResponse;
 
@@ -58,7 +60,7 @@ interface VehicleMaintenance
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function updateMaintenanceSchedule(array $params): WebfleetResponse;
 
@@ -88,7 +90,7 @@ interface VehicleMaintenance
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function deleteMaintenanceSchedule(array $params): WebfleetResponse;
 
@@ -105,7 +107,7 @@ interface VehicleMaintenance
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function showMaintenanceSchedules(
         array $params = [],
@@ -129,7 +131,7 @@ interface VehicleMaintenance
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function showMaintenanceTasks(array $params = []): WebfleetResponse;
 
@@ -155,7 +157,7 @@ interface VehicleMaintenance
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function resolveMaintenanceTask(array $params): WebfleetResponse;
 

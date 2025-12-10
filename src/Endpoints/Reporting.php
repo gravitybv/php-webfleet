@@ -1,18 +1,20 @@
 <?php
+
+declare(strict_types=1);
 /**
  * Interface Reporting
  *
  * @filesource   Reporting.php
  * @created      14.03.2017
- * @package      TomTom\Telematics\Endpoints
+ * @package      Webfleet\Endpoints
  * @author       Smiley <smiley@chillerlan.net>
  * @copyright    2017 Smiley
  * @license      MIT
  */
 
-namespace TomTom\Telematics\Endpoints;
+namespace Webfleet\Endpoints;
 
-use TomTom\Telematics\WebfleetResponse;
+use Webfleet\WebfleetResponse;
 
 /**
  * 4.14 Reporting
@@ -35,7 +37,7 @@ interface Reporting
      * @param array $params
      * @param array $dateRangeFilter
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function getArchivedReportList(
         array $params = [],
@@ -63,7 +65,7 @@ interface Reporting
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function getArchivedReport(array $params): WebfleetResponse;
 
@@ -81,7 +83,7 @@ interface Reporting
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function deleteArchivedReport(array $params): WebfleetResponse;
 
@@ -100,7 +102,7 @@ interface Reporting
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function getReportList(array $params = []): WebfleetResponse;
 
@@ -118,7 +120,7 @@ interface Reporting
      * @param array $params
      * @param array $dateRangeFilter
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function createReport(
         array $params,
@@ -148,7 +150,7 @@ interface Reporting
      * @param array $params
      * @param array $dateRangeFilter
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function sendReportViaMail(
         array $params,

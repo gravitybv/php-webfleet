@@ -1,24 +1,30 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  *
  * @filesource   WebfleetEndpoint.php
  * @created      19.03.2017
- * @package      TomTom\Telematics
+ * @package      Webfleet
  * @author       Smiley <smiley@chillerlan.net>
  * @copyright    2017 Smiley
  * @license      MIT
  */
 
-namespace TomTom\Telematics;
+namespace Webfleet;
 
-use TomTom\Telematics\HTTP\HTTPClientInterface;
+use Webfleet\HTTP\HTTPClientInterface;
 
 /**
  * Class WebfleetEndpoint
  */
 class WebfleetEndpoint extends WebfleetConnect
 {
-    const RANGE_PATTERN = [
+    /**
+     * @var array<string>
+     */
+    public const RANGE_PATTERN = [
         "d0",
         "d-1",
         "d-2",
@@ -41,11 +47,7 @@ class WebfleetEndpoint extends WebfleetConnect
     ];
 
     /**
-     * __anonymous constructor.
-     *
-     * @param \TomTom\Telematics\HTTP\HTTPClientInterface $http
-     * @param \TomTom\Telematics\WebfleetOptions          $options
-     * @param string                                      $interface
+     * WebfleetEndpoint constructor.
      */
     public function __construct(
         HTTPClientInterface $http,
@@ -58,13 +60,11 @@ class WebfleetEndpoint extends WebfleetConnect
     }
 
     /**
-     * @param string $method
-     * @param array $arguments
+     * Magic call method for API endpoints.
      *
+     * @param array<mixed> $arguments
+     * @throws WebfleetException
      * @todo rate limits
-     *
-     * @return \TomTom\Telematics\WebfleetResponse
-     * @throws \TomTom\Telematics\WebfleetException
      */
     public function __call(string $method, array $arguments): WebfleetResponse
     {
@@ -73,8 +73,6 @@ class WebfleetEndpoint extends WebfleetConnect
             array_key_exists($method, $this->method_map[$this->endpoint])
         ) {
             $_method = $this->method_map[$this->endpoint][$method];
-
-            // ...limiter
 
             // method parameters
             $params =
@@ -127,22 +125,26 @@ class WebfleetEndpoint extends WebfleetConnect
      * @param array $date_range_params
      *
      * @todo doc: Table 3-3: Date range filter parameters -> ISO8601 (only mentioned in general params)
+    /**
+     * Filter and validate date range parameters.
      *
-     * @return array
-     * @throws \TomTom\Telematics\WebfleetException
+     * @param array<string, mixed> $date_range_params
+     * @return array<string, mixed>
+     * @throws WebfleetException
+     * @todo doc: Table 3-3: Date range filter parameters -> ISO8601 (only mentioned in general params)
      */
     protected function dateRangeFilter(array $date_range_params): array
     {
         // range pattern
         if (
             isset($date_range_params["range_pattern"]) &&
-            in_array($date_range_params["range_pattern"], self::RANGE_PATTERN)
+            in_array($date_range_params["range_pattern"], self::RANGE_PATTERN, true)
         ) {
             return ["range_pattern" => $date_range_params["range_pattern"]];
         }
 
         // range_from/to, either as string or unix timestamp
-        elseif (
+        if (
             isset(
                 $date_range_params["rangefrom_string"],
                 $date_range_params["rangeto_string"],
@@ -166,7 +168,7 @@ class WebfleetEndpoint extends WebfleetConnect
         }
 
         // year/month/day
-        elseif (isset($date_range_params["year"])) {
+        if (isset($date_range_params["year"])) {
             $year = intval($date_range_params["year"]);
 
             if (!in_array($year, range(2004, (int) date("Y")), true)) {

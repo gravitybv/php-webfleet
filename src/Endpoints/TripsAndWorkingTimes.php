@@ -1,18 +1,20 @@
 <?php
+
+declare(strict_types=1);
 /**
  * Interface TripsAndWorkingTimes
  *
  * @filesource   TripsAndWorkingTimes.php
  * @created      14.03.2017
- * @package      TomTom\Telematics\Endpoints
+ * @package      Webfleet\Endpoints
  * @author       Smiley <smiley@chillerlan.net>
  * @copyright    2017 Smiley
  * @license      MIT
  */
 
-namespace TomTom\Telematics\Endpoints;
+namespace Webfleet\Endpoints;
 
-use TomTom\Telematics\WebfleetResponse;
+use Webfleet\WebfleetResponse;
 
 /**
  * 4.8 Trips and working times
@@ -32,7 +34,7 @@ interface TripsAndWorkingTimes
      * @param array $params
      * @param array $dateRangeFilterParams
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function showTripReportExtern(
         array $params = [],
@@ -62,7 +64,7 @@ interface TripsAndWorkingTimes
      * @param array $params
      * @param array $dateRangeFilterParams
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function showTripSummaryReportExtern(
         array $params = [],
@@ -84,7 +86,7 @@ interface TripsAndWorkingTimes
      * @param array $params
      * @param array $dateRangeFilterParams
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function showTracks(
         array $params = [],
@@ -108,7 +110,7 @@ interface TripsAndWorkingTimes
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function updateLogbook(array $params): WebfleetResponse;
 
@@ -136,7 +138,7 @@ interface TripsAndWorkingTimes
      * @param array $params
      * @param array $dateRangeFilterParams
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function showLogbook(
         array $params = [],
@@ -158,7 +160,7 @@ interface TripsAndWorkingTimes
      * @param array $params
      * @param array $dateRangeFilterParams
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function showLogbookHistory(
         array $params = [],
@@ -192,7 +194,7 @@ interface TripsAndWorkingTimes
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function updateLogbookMode(array $params): WebfleetResponse;
 
@@ -218,7 +220,7 @@ interface TripsAndWorkingTimes
      * @param array $params
      * @param array $dateRangeFilterParams
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function showWorkingTimes(
         array $params,
@@ -245,7 +247,7 @@ interface TripsAndWorkingTimes
      * @param array $params
      * @param array $dateRangeFilterParams
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function showStandStills(
         array $params,
@@ -270,7 +272,7 @@ interface TripsAndWorkingTimes
      * @param array $params
      * @param array $dateRangeFilterParams
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function showIdleExceptions(
         array $params = [],
@@ -301,7 +303,7 @@ interface TripsAndWorkingTimes
      * @param array $params
      * @param array $dateRangeFilterParams
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function getObjectKPIs(
         array $params,
@@ -323,7 +325,7 @@ interface TripsAndWorkingTimes
      * @param array $params
      * @param array $dateRangeFilterParams
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function getDriverKPIs(
         array $params,
@@ -355,7 +357,7 @@ interface TripsAndWorkingTimes
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function getRemainingDrivingTimesEU(
         array $params = [],

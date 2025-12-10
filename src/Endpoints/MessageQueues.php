@@ -1,18 +1,20 @@
 <?php
+
+declare(strict_types=1);
 /**
  * Interface MessageQueues
  *
  * @filesource   MessageQueues.php
  * @created      14.03.2017
- * @package      TomTom\Telematics\Endpoints
+ * @package      Webfleet\Endpoints
  * @author       Smiley <smiley@chillerlan.net>
  * @copyright    2017 Smiley
  * @license      MIT
  */
 
-namespace TomTom\Telematics\Endpoints;
+namespace Webfleet\Endpoints;
 
-use TomTom\Telematics\WebfleetResponse;
+use Webfleet\WebfleetResponse;
 
 /**
  * 4.1 Message queues
@@ -39,7 +41,7 @@ interface MessageQueues
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function createQueueExtern(array $params): WebfleetResponse;
 
@@ -56,7 +58,7 @@ interface MessageQueues
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function deleteQueueExtern(array $params): WebfleetResponse;
 
@@ -88,7 +90,7 @@ interface MessageQueues
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function popQueueMessagesExtern(array $params): WebfleetResponse;
 
@@ -105,7 +107,7 @@ interface MessageQueues
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function ackQueueMessagesExtern(array $params): WebfleetResponse;
 

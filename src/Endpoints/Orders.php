@@ -1,18 +1,20 @@
 <?php
+
+declare(strict_types=1);
 /**
  * Interface Orders
  *
  * @filesource   Orders.php
  * @created      14.03.2017
- * @package      TomTom\Telematics\Endpoints
+ * @package      Webfleet\Endpoints
  * @author       Smiley <smiley@chillerlan.net>
  * @copyright    2017 Smiley
  * @license      MIT
  */
 
-namespace TomTom\Telematics\Endpoints;
+namespace Webfleet\Endpoints;
 
-use TomTom\Telematics\WebfleetResponse;
+use Webfleet\WebfleetResponse;
 
 /**
  * 4.3 Orders
@@ -33,7 +35,7 @@ interface Orders
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function sendOrderExtern(array $params): WebfleetResponse;
 
@@ -61,7 +63,7 @@ interface Orders
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function sendDestinationOrderExtern(array $params): WebfleetResponse;
 
@@ -103,7 +105,7 @@ interface Orders
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function updateOrderExtern(array $params): WebfleetResponse;
 
@@ -120,7 +122,7 @@ interface Orders
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function updateDestinationOrderExtern(
         array $params,
@@ -159,7 +161,7 @@ interface Orders
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function insertDestinationOrderExtern(
         array $params,
@@ -197,7 +199,7 @@ interface Orders
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function cancelOrderExtern(array $params): WebfleetResponse;
 
@@ -219,7 +221,7 @@ interface Orders
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function assignOrderExtern(array $params): WebfleetResponse;
 
@@ -241,7 +243,7 @@ interface Orders
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function reassignOrderExtern(array $params): WebfleetResponse;
 
@@ -260,7 +262,7 @@ interface Orders
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function deleteOrderExtern(array $params): WebfleetResponse;
 
@@ -277,7 +279,7 @@ interface Orders
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function clearOrdersExtern(array $params): WebfleetResponse;
 
@@ -295,7 +297,7 @@ interface Orders
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function showOrderReportExtern(array $params): WebfleetResponse;
 
@@ -321,7 +323,7 @@ interface Orders
      *
      * @param array $params
      *
-     * @return \TomTom\Telematics\WebfleetResponse
+     * @return \Webfleet\WebfleetResponse
      */
     public function showOrderWaypoints(array $params): WebfleetResponse;
 
