@@ -1,6 +1,6 @@
 {
   "name": "gravitybv/php-webfleet",
-  "description": "A wrapper for the TomTom Business Webfleet.connect API. PHP 8.0+",
+  "description": "A wrapper for the TomTom Business Webfleet.connect API. PHP 8.1+",
   "homepage": "https://github.com/gravitybv/php-webfleet",
   "license": "MIT",
   "type": "library",
