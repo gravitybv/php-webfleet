@@ -98,7 +98,7 @@ interface Drivers
     public function updateDriverExtern(UpdateDriverRequest $request): WebfleetResponse;
 
     const updateDriverExtern = [
-        "required" => ["driveruid"],
+        "required" => [],
         "optional" => [
             "driverno",
             "name",
@@ -119,6 +119,7 @@ interface Drivers
             "dt_cardid",
             "dt_cardcountry",
             "rll_buttonid",
+            "driveruid",
             "driverno_old",
             "driver_key",
         ],
@@ -137,8 +138,7 @@ interface Drivers
     public function deleteDriverExtern(array $params): WebfleetResponse;
 
     const deleteDriverExtern = [
-        "required" => ["driveruid"],
-        "optional" => ["driverno"],
+        "optional" => ["driveruid","driverno"],
         "limits" => [10, 60],
     ];
 
